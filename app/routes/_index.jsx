@@ -1,5 +1,6 @@
 import {json} from '@shopify/remix-oxygen';
 import {Form, useActionData, useNavigation} from '@remix-run/react';
+import {parsePlayerResponse} from '../lib/parse-player-response.mjs';
 
 const MAX_TRANSCRIPT_CHARS = 12000;
 
@@ -194,18 +195,6 @@ function extractYouTubeVideoId(videoUrl) {
     }
 
     return null;
-  } catch {
-    return null;
-  }
-}
-
-function parsePlayerResponse(html) {
-  const directMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\});/s);
-
-  if (!directMatch?.[1]) return null;
-
-  try {
-    return JSON.parse(directMatch[1]);
   } catch {
     return null;
   }
